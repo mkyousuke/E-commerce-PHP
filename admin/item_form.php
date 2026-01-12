@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'];
     $description = $_POST['description'];
     $prix = $_POST['prix'];
-    $stock = $_POST['stock']; // On gère le stock ici directement pour simplifier
+    $stock = $_POST['stock'];
+    $plateforme = $_POST['plateforme']; // On récupère la plateforme
 
     // GESTION DE L'IMAGE
     $imageName = null;
@@ -21,9 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         
         if (in_array($ext, $allowed)) {
-            // On renomme l'image pour éviter les doublons (ex: jeu_65a4b...jpg)
             $imageName = 'game_' . uniqid() . '.' . $ext;
-            // On déplace le fichier dans le dossier uploads
             move_uploaded_file($_FILES['image']['tmp_name'], "../uploads/" . $imageName);
         } else {
             $error = "Format d'image invalide (JPG, PNG, WEBP uniquement).";
@@ -31,18 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$error) {
-        // Insertion du Jeu
-        $stmt = $pdo->prepare("INSERT INTO items (nom, description, prix, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$nom, $description, $prix, $imageName]);
+        // NOUVEAU : On ajoute 'plateforme' dans la requête SQL
+        $stmt = $pdo->prepare("INSERT INTO items (nom, description, prix, image, plateforme) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$nom, $description, $prix, $imageName, $plateforme]);
         
-        // Récupération de l'ID du jeu qu'on vient de créer
+        // Gestion du stock
         $id_item = $pdo->lastInsertId();
-
-        // Insertion du Stock initial
         $stmtStock = $pdo->prepare("INSERT INTO stock (id_item, quantite) VALUES (?, ?)");
         $stmtStock->execute([$id_item, $stock]);
 
-        // Redirection vers le dashboard
         header("Location: index.php");
         exit;
     }
@@ -74,6 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="form-label">Titre du jeu</label>
                             <input type="text" name="nom" class="form-control" required>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Plateforme</label>
+                            <select name="plateforme" class="form-select" required>
+                                <option value="PC">PC</option>
+                                <option value="Playstation">Playstation</option>
+                                <option value="Xbox">Xbox</option>
+                                <option value="Nintendo">Nintendo</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" rows="3"></textarea>

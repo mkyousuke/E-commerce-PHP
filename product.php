@@ -33,6 +33,10 @@ if (!$game) {
 
         <div class="col-md-6">
             <h1 class="display-5"><?= htmlspecialchars($game['nom']); ?></h1>
+            <h1 class="display-5"><?= htmlspecialchars($game['nom']); ?></h1>
+
+<span class="badge bg-secondary fs-6 mb-3"><?= htmlspecialchars($game['plateforme']); ?></span>
+<h3 class="text-primary my-3"><?= number_format($game['prix'], 2); ?> €</h3>
             <h3 class="text-primary my-3"><?= number_format($game['prix'], 2); ?> €</h3>
             
             <p class="lead"><?= nl2br(htmlspecialchars($game['description'])); ?></p>
