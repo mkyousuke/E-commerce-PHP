@@ -5,7 +5,6 @@ require_once '../includes/functions.php';
 checkAdmin();
 
 $error = null;
-$success = null;
 
 // Si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,7 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $prix = $_POST['prix'];
     $stock = $_POST['stock'];
-    $plateforme = $_POST['plateforme']; // On récupère la plateforme
+
+    // TRAITEMENT DES PLATEFORMES MULTIPLES
+    // On reçoit un tableau (array) de cases cochées, on le transforme en texte séparé par des virgules
+    if (isset($_POST['plateforme']) && is_array($_POST['plateforme'])) {
+        $plateforme = implode(', ', $_POST['plateforme']); // Deviendra "PC, Xbox" par exemple
+    } else {
+        $plateforme = "PC"; // Valeur par défaut si rien n'est coché
+    }
 
     // GESTION DE L'IMAGE
     $imageName = null;
@@ -25,16 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $imageName = 'game_' . uniqid() . '.' . $ext;
             move_uploaded_file($_FILES['image']['tmp_name'], "../uploads/" . $imageName);
         } else {
-            $error = "Format d'image invalide (JPG, PNG, WEBP uniquement).";
+            $error = "Format d'image invalide.";
         }
     }
 
     if (!$error) {
-        // NOUVEAU : On ajoute 'plateforme' dans la requête SQL
         $stmt = $pdo->prepare("INSERT INTO items (nom, description, prix, image, plateforme) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$nom, $description, $prix, $imageName, $plateforme]);
         
-        // Gestion du stock
         $id_item = $pdo->lastInsertId();
         $stmtStock = $pdo->prepare("INSERT INTO stock (id_item, quantite) VALUES (?, ?)");
         $stmtStock->execute([$id_item, $stock]);
@@ -58,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h3>Ajouter un nouveau jeu</h3>
+                    <h3>Ajouter un jeu multi-plateforme</h3>
                 </div>
                 <div class="card-body">
                     <?php if ($error): ?>
@@ -72,13 +76,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Plateforme</label>
-                            <select name="plateforme" class="form-select" required>
-                                <option value="PC">PC</option>
-                                <option value="Playstation">Playstation</option>
-                                <option value="Xbox">Xbox</option>
-                                <option value="Nintendo">Nintendo</option>
-                            </select>
+                            <label class="form-label d-block">Plateformes disponibles</label>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="plateforme[]" value="PC" id="pc">
+                                <label class="form-check-label" for="pc">PC</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="plateforme[]" value="Playstation" id="ps">
+                                <label class="form-check-label" for="ps">Playstation</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="plateforme[]" value="Xbox" id="xbox">
+                                <label class="form-check-label" for="xbox">Xbox</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="plateforme[]" value="Nintendo" id="nintendo">
+                                <label class="form-check-label" for="nintendo">Nintendo</label>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -96,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Image (Jaquette)</label>
+                            <label class="form-label">Image</label>
                             <input type="file" name="image" class="form-control">
                         </div>
                         
-                        <button type="submit" class="btn btn-success">Enregistrer le jeu</button>
+                        <button type="submit" class="btn btn-success">Enregistrer</button>
                         <a href="index.php" class="btn btn-secondary">Annuler</a>
                     </form>
                 </div>

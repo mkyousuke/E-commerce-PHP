@@ -1,5 +1,5 @@
 <?php
-
+// index.php (Racine du site)
 require_once 'config/db.php';
 require_once 'includes/header.php';
 
@@ -37,19 +37,25 @@ $games = $stmt->fetchAll();
                     <div class="card-body d-flex flex-column">
                         <div class="mb-2">
                             <?php 
-                            $badgeColor = 'bg-secondary'; // Gris par défaut
+                            // 1. On récupère la chaine (ex: "PC, Xbox") ou une valeur par défaut
+                            $rawPlateforme = isset($game['plateforme']) ? $game['plateforme'] : 'PC';
                             
-                            // On vérifie si la colonne 'plateforme' existe (pour éviter une erreur si on a des vieux jeux sans plateforme)
-                            $plateforme = isset($game['plateforme']) ? $game['plateforme'] : 'PC';
-
-                            if ($plateforme === 'Playstation') $badgeColor = 'bg-primary'; // Bleu
-                            if ($plateforme === 'Xbox') $badgeColor = 'bg-success'; // Vert
-                            if ($plateforme === 'Nintendo') $badgeColor = 'bg-danger'; // Rouge
-                            if ($plateforme === 'PC') $badgeColor = 'bg-dark'; // Noir
+                            // 2. On découpe la chaine en tableau
+                            $plateformeList = explode(',', $rawPlateforme);
+                            
+                            // 3. On boucle pour afficher chaque badge
+                            foreach($plateformeList as $p):
+                                $p = trim($p); // Enlève les espaces inutiles
+                                $badgeColor = 'bg-secondary'; // Gris par défaut
+                                
+                                if ($p === 'Playstation') $badgeColor = 'bg-primary'; // Bleu
+                                if ($p === 'Xbox') $badgeColor = 'bg-success';       // Vert
+                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';    // Rouge
+                                if ($p === 'PC') $badgeColor = 'bg-dark';            // Noir
                             ?>
-                            <span class="badge <?= $badgeColor; ?>"><?= htmlspecialchars($plateforme); ?></span>
+                                <span class="badge <?= $badgeColor; ?> me-1"><?= htmlspecialchars($p); ?></span>
+                            <?php endforeach; ?>
                         </div>
-
                         <h5 class="card-title"><?= htmlspecialchars($game['nom']); ?></h5>
                         <p class="card-text text-truncate"><?= htmlspecialchars($game['description']); ?></p>
                         
