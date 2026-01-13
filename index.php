@@ -12,12 +12,12 @@ $games = $stmt->fetchAll();
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Bienvenue sur GameShop</h1>
         <p class="col-md-8 fs-4 mx-auto">Le meilleur du jeu vidéo au meilleur prix.</p>
-        <a href="#jeux" class="btn btn-primary btn-lg">Voir les jeux</a>
+        <a href="catalog.php" class="btn btn-primary btn-lg">Voir tout le catalogue</a>
     </div>
 </div>
 
 <div class="container" id="jeux">
-    <h2 class="mb-4">Nos derniers jeux</h2>
+    <h2 class="mb-4">Nos dernières nouveautés</h2>
     
     <?php if(empty($games)): ?>
         <div class="alert alert-warning">Aucun jeu n'est disponible pour le moment.</div>
@@ -25,45 +25,56 @@ $games = $stmt->fetchAll();
         <div class="row">
             <?php foreach ($games as $game): ?>
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div style="height: 250px; overflow: hidden; background: #eee; display: flex; align-items: center; justify-content: center;">
-                        <?php if($game['image']): ?>
-                            <img src="uploads/<?= htmlspecialchars($game['image']); ?>" alt="<?= htmlspecialchars($game['nom']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
-                        <?php else: ?>
-                            <span class="text-muted">Pas d'image</span>
-                        <?php endif; ?>
+                <div class="card h-100 shadow-sm border-0 hover-effect">
+                    
+                    <div style="height: 250px; overflow: hidden; background: #eee; position: relative;">
+                        <a href="product.php?id=<?= $game['id']; ?>">
+                            <?php if($game['image']): ?>
+                                <img src="uploads/<?= htmlspecialchars($game['image']); ?>" alt="<?= htmlspecialchars($game['nom']); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            <?php else: ?>
+                                <div class="d-flex align-items-center justify-content-center h-100 text-muted">Pas d'image</div>
+                            <?php endif; ?>
+                        </a>
                     </div>
 
                     <div class="card-body d-flex flex-column">
                         <div class="mb-2">
                             <?php 
-                            // 1. On récupère la chaine (ex: "PC, Xbox") ou une valeur par défaut
                             $rawPlateforme = isset($game['plateforme']) ? $game['plateforme'] : 'PC';
-                            
-                            // 2. On découpe la chaine en tableau
                             $plateformeList = explode(',', $rawPlateforme);
                             
-                            // 3. On boucle pour afficher chaque badge
                             foreach($plateformeList as $p):
-                                $p = trim($p); // Enlève les espaces inutiles
-                                $badgeColor = 'bg-secondary'; // Gris par défaut
+                                $p = trim($p);
+                                $badgeColor = 'bg-secondary';
                                 
-                                if ($p === 'Playstation') $badgeColor = 'bg-primary'; // Bleu
-                                if ($p === 'Xbox') $badgeColor = 'bg-success';       // Vert
-                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';    // Rouge
-                                if ($p === 'PC') $badgeColor = 'bg-dark';            // Noir
+                                if ($p === 'Playstation') $badgeColor = 'bg-primary';
+                                if ($p === 'Xbox') $badgeColor = 'bg-success';
+                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';
+                                if ($p === 'PC') $badgeColor = 'bg-dark';
                             ?>
-                                <span class="badge <?= $badgeColor; ?> me-1"><?= htmlspecialchars($p); ?></span>
+                                <span class="badge <?= $badgeColor; ?> me-1" style="font-size: 0.75rem;"><?= htmlspecialchars($p); ?></span>
                             <?php endforeach; ?>
                         </div>
-                        <h5 class="card-title"><?= htmlspecialchars($game['nom']); ?></h5>
-                        <p class="card-text text-truncate"><?= htmlspecialchars($game['description']); ?></p>
-                        
-                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0 text-primary"><?= number_format($game['prix'], 2); ?> €</span>
-                            <a href="product.php?id=<?= $game['id']; ?>" class="btn btn-outline-primary btn-sm">
-                                Voir détails
+
+                        <h5 class="card-title text-truncate">
+                            <a href="product.php?id=<?= $game['id']; ?>" class="text-decoration-none text-dark">
+                                <?= htmlspecialchars($game['nom']); ?>
                             </a>
+                        </h5>
+                        <p class="card-text text-truncate text-muted small"><?= htmlspecialchars($game['description']); ?></p>
+                        
+                        <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+                            <span class="h5 mb-0 text-primary fw-bold"><?= number_format($game['prix'], 2); ?> €</span>
+                            
+                            <div>
+                                <a href="product.php?id=<?= $game['id']; ?>" class="btn btn-outline-secondary btn-sm me-1">
+                                    Détails
+                                </a>
+                                
+                                <a href="cart.php?action=add&id=<?= $game['id']; ?>" class="btn btn-primary btn-sm shadow-sm">
+                                    Ajouter au panier
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
