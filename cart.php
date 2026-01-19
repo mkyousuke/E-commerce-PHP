@@ -108,7 +108,7 @@ require_once 'includes/header.php';
                             <td class="align-middle fw-bold"><?= number_format($totalLigne, 2); ?> €</td>
                             <td class="align-middle">
                                 <a href="cart.php?action=delete&id=<?= $item['id']; ?>" class="btn btn-sm btn-outline-danger" title="Supprimer">
-                                    🗑️
+                                    Retirer du panier
                                 </a>
                             </td>
                         </tr>
