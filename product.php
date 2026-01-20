@@ -72,15 +72,15 @@ if (!$game) { echo "<div class='container mt-5'>Jeu introuvable.</div>"; require
                 </div>
 
                 <div class="d-flex align-items-center mb-4 p-3 rounded-3 border border-white border-opacity-25" style="background: rgba(0,0,0,0.2);">
-                    <span class="display-5 fw-bold me-4 text-warning"><?= number_format($game['prix'], 2); ?> €</span>
+                    <span class="display-5 fw-bold me-4 text-white"><?= number_format($game['prix'], 2); ?> €</span>
                     
                     <?php if($game['quantite'] > 0): ?>
                         <span class="badge bg-success text-white border border-light border-opacity-50 px-3 py-2">
-                            ✅ En stock (<?= $game['quantite']; ?>)
+                            En stock (<?= $game['quantite']; ?>)
                         </span>
                     <?php else: ?>
                         <span class="badge bg-danger text-white border border-light border-opacity-50 px-3 py-2">
-                            ❌ Rupture
+                            Rupture
                         </span>
                     <?php endif; ?>
                 </div>

@@ -14,7 +14,7 @@ if ($search) {
     $params[] = "%$search%";
 }
 
-// 2. Filtre par Plateforme
+//2. Filtre par Plateforme
 $platform = $_GET['platform'] ?? '';
 if ($platform) {
     $sql .= " AND plateforme LIKE ?";
@@ -40,7 +40,7 @@ $games = $stmt->fetchAll();
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-0 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">🔍 Filtrer les jeux</h5>
+                    <h5 class="card-title mb-3">Filtrer les jeux</h5>
                     <form action="catalog.php" method="GET">
                         
                         <div class="mb-3">
