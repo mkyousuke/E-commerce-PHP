@@ -48,7 +48,6 @@ require_once 'includes/header.php';
 
         <div class="col-md-4 mb-4">
             <div class="p-4 rounded-4 bg-light h-100 border-0 shadow-sm hover-card">
-                <div class="display-4 mb-3">🚀</div>
                 <h4 class="fw-bold">Livraison Instantanée</h4>
                 <p class="text-muted small">
                     Vos jeux sont expédiés ou disponibles immédiatement après validation de la commande. On ne vous fait pas attendre.
@@ -58,7 +57,6 @@ require_once 'includes/header.php';
 
         <div class="col-md-4 mb-4">
             <div class="p-4 rounded-4 bg-light h-100 border-0 shadow-sm hover-card">
-                <div class="display-4 mb-3">💎</div>
                 <h4 class="fw-bold">Prix Justes</h4>
                 <p class="text-muted small">
                     Nous négocions les meilleurs tarifs pour vous proposer des prix compétitifs toute l'année, pas seulement pendant les soldes.
@@ -68,7 +66,6 @@ require_once 'includes/header.php';
 
         <div class="col-md-4 mb-4">
             <div class="p-4 rounded-4 bg-light h-100 border-0 shadow-sm hover-card">
-                <div class="display-4 mb-3">🎧</div>
                 <h4 class="fw-bold">Service Passionné</h4>
                 <p class="text-muted small">
                     Une question ? Un problème ? Notre support client est composé de vrais joueurs qui comprennent vos besoins.

@@ -1,9 +1,12 @@
 <?php
 // index.php (Racine du site)
+
+// 1. Connexion à la base de données et inclusion du header (menu de navigation)
 require_once 'config/db.php';
 require_once 'includes/header.php';
 
-// On récupère les 6 derniers jeux pour les afficher en nouveautés
+// 2. Récupération des jeux pour la section "Nouveautés"
+// On demande les 6 derniers éléments de la table 'items', triés par ID décroissant (le plus grand ID est le plus récent)
 $stmt = $pdo->query("SELECT * FROM items ORDER BY id DESC LIMIT 6");
 $games = $stmt->fetchAll();
 ?>
@@ -22,6 +25,7 @@ $games = $stmt->fetchAll();
     <?php if(empty($games)): ?>
         <div class="alert alert-warning">Aucun jeu n'est disponible pour le moment.</div>
     <?php else: ?>
+        
         <div class="row">
             <?php foreach ($games as $game): ?>
             <div class="col-md-4 mb-4">
@@ -40,17 +44,21 @@ $games = $stmt->fetchAll();
                     <div class="card-body d-flex flex-column">
                         <div class="mb-2">
                             <?php 
+                            // 5. Gestion des badges plateformes (PC, Xbox, etc.)
+                            // On récupère la chaine (ex: "PC, PS5") et on la coupe pour faire un tableau
                             $rawPlateforme = isset($game['plateforme']) ? $game['plateforme'] : 'PC';
                             $plateformeList = explode(',', $rawPlateforme);
                             
+                            // On boucle sur chaque plateforme pour afficher un badge coloré
                             foreach($plateformeList as $p):
-                                $p = trim($p);
-                                $badgeColor = 'bg-secondary';
+                                $p = trim($p); // Enlève les espaces inutiles
+                                $badgeColor = 'bg-secondary'; // Couleur grise par défaut
                                 
-                                if ($p === 'Playstation') $badgeColor = 'bg-primary';
-                                if ($p === 'Xbox') $badgeColor = 'bg-success';
-                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';
-                                if ($p === 'PC') $badgeColor = 'bg-dark';
+                                // Changement de couleur selon la marque
+                                if ($p === 'Playstation') $badgeColor = 'bg-primary'; // Bleu
+                                if ($p === 'Xbox') $badgeColor = 'bg-success';       // Vert
+                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';    // Rouge
+                                if ($p === 'PC') $badgeColor = 'bg-dark';            // Noir
                             ?>
                                 <span class="badge <?= $badgeColor; ?> me-1" style="font-size: 0.75rem;"><?= htmlspecialchars($p); ?></span>
                             <?php endforeach; ?>
