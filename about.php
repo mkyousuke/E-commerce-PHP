@@ -26,7 +26,7 @@ require_once 'includes/header.php';
         <div class="col-md-6 ps-md-5">
             <h2 class="fw-bold mb-3">Notre Mission</h2>
             <p class="lead text-dark">
-                Fondé en 2026 par un passionné de code et de gaming, GameShop est né d'une volonté simple : rendre le jeu vidéo accessible à tous, sans compromis sur la qualité.
+                Fondé en 2026 par un passionné de gaming, GameShop est né d'une volonté simple : rendre le jeu vidéo accessible à tous, sans compromis sur la qualité.
             </p>
             <p class="text-muted">
                 Nous savons à quel point il est frustrant de chercher un jeu partout ou de payer trop cher. C'est pourquoi nous avons créé une plateforme fluide, rapide et sécurisée.

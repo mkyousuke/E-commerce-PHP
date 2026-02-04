@@ -54,7 +54,7 @@ require_once 'includes/header.php';
 
     <?php if (empty($_SESSION['cart'])): ?>
         <div class="alert alert-info py-5 text-center">
-            <h3>Votre panier est vide 🛒</h3>
+            <h3>Votre panier est vide</h3>
             <p class="mt-3">Découvrez nos nouveautés et remplissez-le !</p>
             <a href="index.php" class="btn btn-primary mt-2">Retourner à la boutique</a>
         </div>
@@ -136,7 +136,7 @@ require_once 'includes/header.php';
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <form action="checkout.php" method="POST">
                             <button type="submit" class="btn btn-success btn-lg w-100 py-3 shadow-sm">
-                                Payer et Commander ✅
+                                Payer et Commander
                             </button>
                         </form>
                     <?php else: ?>

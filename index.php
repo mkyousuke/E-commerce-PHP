@@ -55,10 +55,10 @@ $games = $stmt->fetchAll();
                                 $badgeColor = 'bg-secondary'; // Couleur grise par défaut
                                 
                                 // Changement de couleur selon la marque
-                                if ($p === 'Playstation') $badgeColor = 'bg-primary'; // Bleu
-                                if ($p === 'Xbox') $badgeColor = 'bg-success';       // Vert
-                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';    // Rouge
-                                if ($p === 'PC') $badgeColor = 'bg-dark';            // Noir
+                                if ($p === 'Playstation') $badgeColor = 'bg-primary';
+                                if ($p === 'Xbox') $badgeColor = 'bg-success';       
+                                if ($p === 'Nintendo') $badgeColor = 'bg-danger';   
+                                if ($p === 'PC') $badgeColor = 'bg-dark';         
                             ?>
                                 <span class="badge <?= $badgeColor; ?> me-1" style="font-size: 0.75rem;"><?= htmlspecialchars($p); ?></span>
                             <?php endforeach; ?>
