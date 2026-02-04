@@ -1,0 +1,17 @@
+# GameShop
+
+Site e-commerce simple pour la vente de jeux vidéo, développé en PHP et MySQL.
+
+## Installation
+
+1. Placez le dossier du projet dans le répertoire de votre serveur local (ex: C:\xampp\htdocs\GameShop).
+2. Ouvrez phpMyAdmin et créez une base de données nommée 'gameshop_db'.
+3. Importez le fichier 'gameshop_db.sql' situé dans le dossier 'BDD'.
+4. Vérifiez les paramètres de connexion dans le fichier 'config/db.php'.
+
+## Accès Administrateur
+
+Utilisez les identifiants suivants pour accéder au panneau d'administration :
+
+- Email : admin@mail.com
+- Mot de passe : admin

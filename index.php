@@ -20,7 +20,7 @@ $games = $stmt->fetchAll();
 </div>
 
 <div class="container" id="jeux">
-    <h2 class="mb-4">Nos dernières nouveautés</h2>
+    <h2 class="mb-4">Nos derniers ajouts</h2>
     
     <?php if(empty($games)): ?>
         <div class="alert alert-warning">Aucun jeu n'est disponible pour le moment.</div>

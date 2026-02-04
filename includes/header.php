@@ -24,7 +24,7 @@ if (isset($_SESSION['cart'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Petits ajustements visuels */
+        /* Ajustements visuels */
         .navbar { backdrop-filter: blur(10px); }
         .nav-link { transition: color 0.3s; font-weight: 500; }
         .nav-link:hover { color: #ffc107 !important; } /* Or au survol */
