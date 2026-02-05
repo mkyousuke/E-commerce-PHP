@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_name'] = $user['nom'];
         $_SESSION['user_role'] = $user['role'];
 
-        // Redirection vers l'accueil ou l'admin selon le rôle
         if ($user['role'] === 'admin') {
             header("Location: admin/index.php");
         } else {

@@ -7,7 +7,6 @@ checkAdmin();
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Sécurité : Empêcher l'admin de se supprimer lui-même
     if ($id == $_SESSION['user_id']) {
         die("Vous ne pouvez pas supprimer votre propre compte.");
     }

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = $_POST['stock'];
 
     // TRAITEMENT DES PLATEFORMES MULTIPLES
-    // On reçoit un tableau (array) de cases cochées, on le transforme en texte séparé par des virgules
+    // On reçoit un tableau de cases cochées, on le transforme en texte séparé par des virgules
     if (isset($_POST['plateforme']) && is_array($_POST['plateforme'])) {
         $plateforme = implode(', ', $_POST['plateforme']); // Deviendra "PC, Xbox" par exemple
     } else {

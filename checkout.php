@@ -61,8 +61,6 @@ try {
     $stmtInvoice->execute([$user_id, $totalAmount]);
     
     // D. Enregistrer les commandes et baisser le stock
-    // CORRECTION IMPORTANTE : On boucle sur $items (ceux qui existent vraiment en BDD)
-    // Cela évite l'erreur "Foreign key constraint fails" si un jeu a été supprimé
     foreach ($items as $item) {
         $id_item = $item['id'];
         $qty = $cart[$id_item];
