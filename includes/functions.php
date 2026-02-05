@@ -3,7 +3,7 @@
 function checkAdmin() {
     // Si la session n'est pas démarrée ou si le rôle n'est pas admin
     if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-        // Hop, on redirige vers la connexion
+        // On redirige vers la connexion
         header("Location: ../login.php");
         exit;
     }
